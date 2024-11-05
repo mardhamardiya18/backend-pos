@@ -12,7 +12,7 @@ const allowedExtensions = [".jpg", ".jpeg", ".png", ".gif", ".webp"];
 const storage = multer.diskStorage({
   // Menentukan direktori tujuan upload
   destination: (req, file, cb) => {
-    cb(null, "uploads/"); // Mengarahkan file yang diupload ke folder 'uploads/'
+    cb(null, "uploads"); // Mengarahkan file yang diupload ke folder 'uploads/'
   },
   // Menentukan nama file yang disimpan
   filename: (req, file, cb) => {
