@@ -9,6 +9,7 @@ const {
   validateLogin,
   validateUser,
   validateCategory,
+  validateProduct,
 } = require("../utils/validators");
 
 const {
@@ -21,6 +22,7 @@ const {
 const loginController = require("../controllers/LoginController");
 const userController = require("../controllers/UserController");
 const categoryController = require("../controllers/CategoryController");
+const productController = require("../controllers/ProductController");
 
 // Define routes
 const routes = [
@@ -109,6 +111,48 @@ const routes = [
     path: "/categories-all",
     middlewares: [verifyToken],
     handler: categoryController.allCategories,
+  },
+
+  // Product routes
+  {
+    method: "get",
+    path: "/products",
+    middlewares: [verifyToken],
+    handler: productController.findProducts,
+  },
+  {
+    method: "post",
+    path: "/products",
+    middlewares: [
+      verifyToken,
+      upload.single("image"),
+      validateProduct,
+      handleValidationErrors,
+    ],
+    handler: productController.createProduct,
+  },
+  {
+    method: "get",
+    path: "/products/:id",
+    middlewares: [verifyToken],
+    handler: productController.findProductById,
+  },
+  {
+    method: "put",
+    path: "/products/:id",
+    middlewares: [
+      verifyToken,
+      upload.single("image"),
+      validateProduct,
+      handleValidationErrors,
+    ],
+    handler: productController.updateProduct,
+  },
+  {
+    method: "delete",
+    path: "/products/:id",
+    middlewares: [verifyToken],
+    handler: productController.deleteProduct,
   },
 ];
 
