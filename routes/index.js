@@ -12,6 +12,7 @@ const {
   validateProduct,
   validateCustomer,
   validateCart,
+  validateTransaction,
 } = require("../utils/validators");
 
 const {
@@ -27,6 +28,7 @@ const categoryController = require("../controllers/CategoryController");
 const productController = require("../controllers/ProductController");
 const customerController = require("../controllers/CustomerController");
 const cartController = require("../controllers/CartController");
+const transactionController = require("../controllers/TransactionController");
 
 // Define routes
 const routes = [
@@ -227,6 +229,20 @@ const routes = [
     path: "/carts/:id",
     middlewares: [verifyToken],
     handler: cartController.deleteCart,
+  },
+
+  // transaction route
+  {
+    method: "post",
+    path: "/transactions",
+    middlewares: [verifyToken, validateTransaction, handleValidationErrors],
+    handler: transactionController.createTransaction,
+  },
+  {
+    method: "get",
+    path: "/transactions",
+    middlewares: [verifyToken],
+    handler: transactionController.findTransactionByInvoice,
   },
 ];
 
